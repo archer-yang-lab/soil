@@ -1,4 +1,4 @@
-soil <- function(x, y, n_train = ceiling(n/2), no_rep = 50, 
+soil <- function(x, y, n_train = ceiling(n/2), no_rep = 100, 
 					n_train_bound = n_train-2, n_bound = n-2, psi = 1, 
 					family = c("gaussian", "binomial"), method = c("union", "customize"),
               candidate_models, weight_type = c("BIC", "AIC", "ARM"), prior = TRUE,
@@ -73,7 +73,7 @@ soil <- function(x, y, n_train = ceiling(n/2), no_rep = 50,
 	 # compute soil etc
 	 importance <- weight%*%candidate_models
     # output 
-    object <- list(importance = importance, candidate_models_cleaned = candidate_models, weight = weight)
+    object <- list(importance = importance, candidate_models_cleaned = 							candidate_models, weight = weight)
     class(object) <- "soil"
     object
 }

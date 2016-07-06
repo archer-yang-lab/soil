@@ -6,7 +6,7 @@ The package calculates the Sparsity Oriented Importance Learning (SOIL) measure,
 an objective and informative profile of variable importances for high dimensional 
 regression and classification models.}
 \usage{
-soil(x, y, n_train = ceiling(n/2), no_rep = 50,
+soil(x, y, n_train = ceiling(n/2), no_rep = 100,
                  n_train_bound = n_train - 2, n_bound = n - 2,
                  psi = 1, family = c("gaussian",
                  "binomial"), method = c("union", "customize"),
