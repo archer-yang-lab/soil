@@ -1,6 +1,6 @@
 Package: SOIL
 Type: Package
-Title: Sparsity Oriented Importance Learning (SOIL)
+Title: Sparsity Oriented Importance Learning
 Version: 1.0
 Date: 2016-07-07
 Author: Chenglong Ye <yexxx323@umn.edu>, Yi Yang <yi.yang6@mcgill.ca>, Yuhong Yang <yyang@stat.umn.edu>
