@@ -10,7 +10,7 @@ logitARM <- function(x, y, candidate_models, n_train, no_rep, psi, prior = TRUE,
     if (any(candidate_models[1, ] == 1)) {
       for (j in seq(n_mo)) {
         varindex <- (candidate_models[j, ] == 1)
-        glmfit <- if(reduce_bias==TRUE) brglm(y[tindex] ~ x[tindex, varindex], family = binomial) else glm(y[tindex] ~ x[tindex, varindex], family = binomial)
+        glmfit <- if(reduce_bias==TRUE) brglmFit(y=y[tindex],x=x[tindex, varindex], family = binomial) else glm(y[tindex] ~ x[tindex, varindex], family = binomial)
         if (any(is.na(glmfit$coef))) {
           lw_num[j] <- -Inf  
         } else {
@@ -27,7 +27,7 @@ logitARM <- function(x, y, candidate_models, n_train, no_rep, psi, prior = TRUE,
       }
       for (j in seq(2, n_mo)) {
         varindex <- (candidate_models[j, ] == 1)
-        glmfit <- if(reduce_bias==TRUE) brglm(y[tindex] ~ x[tindex, varindex], family = binomial) else glm(y[tindex] ~ x[tindex, varindex], family = binomial) 
+        glmfit <- if(reduce_bias==TRUE) brglmFit(y=y[tindex], x=x[tindex, varindex], family = binomial) else glm(y[tindex] ~ x[tindex, varindex], family = binomial) 
         if(any(is.na(glmfit$coef))) {
           lw_num[j] <- -Inf  
         } else {

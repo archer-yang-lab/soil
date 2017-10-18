@@ -1,15 +1,15 @@
 Package: SOIL
 Type: Package
 Title: Sparsity Oriented Importance Learning
-Version: 1.0
-Date: 2016-07-07
+Version: 1.1
+Date: 2017-09-20
 Author: Chenglong Ye <yexxx323@umn.edu>, Yi Yang <yi.yang6@mcgill.ca>, Yuhong Yang <yyang@stat.umn.edu>
 Maintainer: Yi Yang <yi.yang6@mcgill.ca>
-Depends: stats, glmnet, ncvreg, MASS, parallel, brglm
-Description: Sparsity Oriented Importance Learning (SOIL) provides an objective and informative profile of variable importances for high dimensional regression and classification models.
+Imports: stats, glmnet, ncvreg, MASS, parallel, brglm2
+Description: Sparsity Oriented Importance Learning (SOIL) provides a new variable importance measure for high dimensional linear regression and logistic regression from a sparse penalization perspective, by taking into account the variable selection uncertainty via the use of a sensible model weighting. The package is an implementation of Ye, C., Yang, Y., and Yang, Y. (2017+).
 License: GPL-2
 URL: https://github.com/emeryyi/SOIL
-Packaged: 2016-07-07 18:26:57 UTC; yiyang
-Date/Publication: 2016-07-07 18:26:57
+Packaged: 2016-07-07 11:11:11 UTC; yiyang
+Date/Publication: 2016-07-07 11:11:11
 NeedsCompilation: no
 Repository: CRAN

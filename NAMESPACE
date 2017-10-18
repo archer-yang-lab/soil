@@ -1,2 +1,2 @@
-import("stats","glmnet","ncvreg","MASS","parallel","brglm")
+import("stats","glmnet","ncvreg","MASS","parallel","brglm2")
 export(SOIL)

@@ -1,5 +1,10 @@
 CHANGELOG - Record of Changes for SOIL
 Please find below the list of the various changes and improvements that were part of each successive update.
  
+
+1.1:
+* The candidate models are now from Lasso and Adaptive Lasso by default.
+* Update the reference of the package.
+
 1.0:
 * Initial release.

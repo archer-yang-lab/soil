@@ -2,14 +2,12 @@
 \alias{SOIL}
 \title{Sparsity Oriented Importance Learning (SOIL)}
 \description{
-The package calculates the Sparsity Oriented Importance Learning (SOIL) measure, which provides 
-an objective and informative profile of variable importances for high dimensional 
-regression and classification models.}
+Sparsity Oriented Importance Learning (SOIL) provides a new variable importance measure for high dimensional linear regression and logistic regression from a sparse penalization perspective, by taking into account the variable selection uncertainty via the use of a sensible model weighting. The package is an implementation of Ye, C., Yang, Y., and Yang, Y. (2017+) DOI: <doi:10.1080/01621459.2017.1377080>.}
 \usage{
 SOIL(x, y, n_train = ceiling(n/2), no_rep = 100,
                  n_train_bound = n_train - 2, n_bound = n - 2,
                  psi = 1, family = c("gaussian",
-                 "binomial"), method = c("union", "customize"),
+                 "binomial"), method = c("lasso","union", "customize"),
                  candidate_models, weight_type = c("BIC", "AIC",
                  "ARM"), prior = TRUE, reduce_bias = FALSE)
 }
@@ -26,7 +24,7 @@ SOIL(x, y, n_train = ceiling(n/2), no_rep = 100,
   \item{n_bound}{When computing the weights using \code{AIC} or \code{BIC}, the candidate models with the size larger than \code{n_train_bound} will be dropped. The default value is \code{n-2}.}
   \item{psi}{A positive number to control the improvement of the prior weight. The default value is 1.}
   \item{family}{Choose the family for GLM models. So far \code{gaussian} and \code{binomial} are implemented. The default is \code{gaussian}.}
-  \item{method}{Users can choose either \code{union} or \code{customize}. If \code{method=="union"}, then the program automatically provides the candidate models as a union of solution paths of Lasso, SCAD, and MCP; If \code{method="customize"}, users must provide their own set of candidate models in the input argument \code{candidate_models} as a matrix, each row of which is a 0/1 index vector representing whether each variable is included/excluded in the model. For details see Example section.}
+  \item{method}{Users can choose \code{lasso}, \code{union} or \code{customize}. If \code{method=="lasso"}, then the program automatically provides the candidate models as a union of solution paths of Lasso, Adaptive Lasso; If \code{method=="union"}, then the program automatically provides the candidate models as a union of solution paths of Lasso, Adaptive Lasso, SCAD, and MCP; If \code{method="customize"}, users must provide their own set of candidate models in the input argument \code{candidate_models} as a matrix, each row of which is a 0/1 index vector representing whether each variable is included/excluded in the model. For details see Example section. The default option is \code{method=="lasso"}.} 
   \item{candidate_models}{Only available when \code{method="customize"}. It is a matrix of candidate models, each row of which is a 0/1 index vector representing whether each variable is included/excluded in the model. For details see Example section.}
   \item{weight_type}{Options for computing weights for SOIL measure. Users can choose among \code{ARM}, \code{AIC} and \code{BIC}. The default is \code{BIC}.}
   \item{prior}{Whether to use prior in the weighting function. The default is \code{TRUE}.}
@@ -45,7 +43,8 @@ A "SOIL" object is retured. The components are:
 }
 
 \references{
-Ye, Chenglong, Yang, Y., Yang, Y. (2016), "Sparsity Oriented Importance Learning," \emph{preprint}.\cr
+Ye, C., Yang, Y., and Yang, Y. (2017+). "Sparsity Oriented Importance Learning for High-dimensional Linear Regression". \emph{Journal of the American Statistical Association}. (Accepted) DOI: 10.1080/01621459.2017.1377080 \cr
+
 BugReport: \url{https://github.com/emeryyi/SOIL}\cr
 }
 
@@ -56,25 +55,23 @@ BugReport: \url{https://github.com/emeryyi/SOIL}\cr
 n <- 50
 p <- 8
 beta <- c(3,1.5,0,0,2,0,0,0)
-sigma <- matrix(0,p,p)
-for(i in 1:p){
-   for(j in 1:p) sigma[i,j] <- 0.5^abs(i-j)
-}
-x <- mvrnorm(n, rep(0,p), sigma)
+b0 <- 1
+x <- matrix(rnorm(n*p,0,1),nrow=n,ncol=p)
 e <- rnorm(n)
-y <- x \%*\% beta + e
+y <- x \%*\% beta + b0 + e
 
 
 # compute SOIL using ARM with prior
 v_ARM <- SOIL(x, y, family = "gaussian",
 weight_type = "ARM", prior = TRUE)
 
+# compute SOIL using BIC
+v_BIC <- SOIL(x, y, family = "gaussian", weight_type = "BIC")
+
 # compute SOIL using AIC
 v_AIC <- SOIL(x, y, family = "gaussian", 
 weight_type = "AIC", prior = TRUE)
 
-# compute SOIL using BIC
-v_BIC <- SOIL(x, y, family = "gaussian", weight_type = "BIC")
 
 # user supplied candidate models
 candidate_models = rbind(c(0,0,0,0,0,0,0,1), 

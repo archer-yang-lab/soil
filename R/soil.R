@@ -1,7 +1,7 @@
 SOIL <- function(x, y, n_train = ceiling(n/2), no_rep = 100, 
 					n_train_bound = n_train-2, n_bound = n-2, psi = 1, 
-					family = c("gaussian", "binomial"), method = c("union", "customize"),
-              candidate_models, weight_type = c("BIC", "AIC", "ARM"), prior = TRUE,
+					family = c("gaussian", "binomial"), method = c("lasso","union", "customize"),
+              	  	candidate_models, weight_type = c("BIC", "AIC", "ARM"), prior = TRUE,
 					reduce_bias = FALSE) {
     # check data and parameter
     family <- match.arg(family)
@@ -21,6 +21,12 @@ SOIL <- function(x, y, n_train = ceiling(n/2), no_rep = 100,
     if (n_train >= n) 
         stop("Training size must be less than the number of observations")
     # use union option to compute candidate models
+    if (method == "lasso") {
+      if (family == "gaussian") 
+        candidate_models <- gaussianfit_lasso(x, y)
+      if (family == "binomial") 
+        candidate_models <- binomialfit_lasso(x, y)
+    }
     if (method == "union") {
       if (family == "gaussian") 
         candidate_models <- gaussianfit(x, y)
